@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Livre{% endblock %}
+
+{% block body %}
+    {% include 'navbar.html.twig' %}
+    <div class="max-w-xl mx-auto border-2 mt-20 shadow px-10 py-10">
+        <h1 class="text-xl font-bold mb-4">Créer un livre</h1>
+
+        {{ form_start(form) }}
+        {{ form_row(form.titre, { 'attr': {'class': 'flex flex-row justify-between mb-4 p-2 border border-gray-300 rounded w-full'} }) }}
+        {{ form_row(form.date_de_parution, { 'attr': {'class': 'flex flex-row justify-between mb-4 p-2 border border-gray-300 rounded w-full'} }) }}
+        {{ form_row(form.nombre_de_pages, { 'attr': {'class': 'flex flex-row justify-between mb-4 p-2 border border-gray-300 rounded w-full'} }) }}
+        {{ form_row(form.statut, { 'attr': {'class': 'flex flex-row justify-between mb-4 p-2 border border-gray-300 rounded w-full'} }) }}
+
+        <div class="mb-4">
+            <label  for="{{ form.Auteur.vars.id }}">Auteur :</label>
+            {{ form_widget(form.Auteur, { 'attr': {'class': 'border border-gray-300 rounded w-full'} }) }}
+        </div>
+
+        <div class="mb-4">
+            <label class="font-bold" for="{{ form.Categorie.vars.id }}">Catégorie :</label>
+            {{ form_widget(form.Categorie, { 'attr': {'class': 'space-x-1'} }) }}
+        </div>
+
+        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">Enregistrer</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

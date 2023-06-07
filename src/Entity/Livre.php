@@ -19,16 +19,16 @@ class Livre
     private ?string $titre = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $date_de_parution = null;
+    private ?\DateTime $date_de_parution = null;
 
     #[ORM\Column]
     private ?int $nombre_de_pages = null;
 
     #[ORM\ManyToOne(inversedBy: 'livres')]
-    private ?Auteur $Auteur = null;
+    private ?Auteur $auteur = null;
 
     #[ORM\ManyToMany(targetEntity: Categorie::class, inversedBy: 'livres')]
-    private Collection $Catégorie;
+    private Collection $Categorie;
 
     #[ORM\ManyToMany(targetEntity: Emprunt::class, inversedBy: 'livres')]
     private Collection $Emprunt;
@@ -38,8 +38,9 @@ class Livre
 
     public function __construct()
     {
-        $this->Catégorie = new ArrayCollection();
+        $this->Categorie = new ArrayCollection();
         $this->Emprunt = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -59,12 +60,12 @@ class Livre
         return $this;
     }
 
-    public function getDateDeParution(): ?\DateTimeImmutable
+    public function getDateDeParution(): ?\DateTime
     {
         return $this->date_de_parution;
     }
 
-    public function setDateDeParution(\DateTimeImmutable $date_de_parution): self
+    public function setDateDeParution(\DateTime $date_de_parution): self
     {
         $this->date_de_parution = $date_de_parution;
 
@@ -85,12 +86,12 @@ class Livre
 
     public function getAuteur(): ?Auteur
     {
-        return $this->Auteur;
+        return $this->auteur;
     }
 
-    public function setAuteur(?Auteur $Auteur): self
+    public function setAuteur(?Auteur $auteur): self
     {
-        $this->Auteur = $Auteur;
+        $this->auteur = $auteur;
 
         return $this;
     }
@@ -98,23 +99,23 @@ class Livre
     /**
      * @return Collection<int, Categorie>
      */
-    public function getCatégorie(): Collection
+    public function getCategorie(): Collection
     {
-        return $this->Catégorie;
+        return $this->Categorie;
     }
 
-    public function addCatGorie(Categorie $catGorie): self
+    public function addCategorie(Categorie $categorie): self
     {
-        if (!$this->Catégorie->contains($catGorie)) {
-            $this->Catégorie->add($catGorie);
+        if (!$this->Categorie->contains($categorie)) {
+            $this->Categorie->add($categorie);
         }
 
         return $this;
     }
 
-    public function removeCatGorie(Categorie $catGorie): self
+    public function removeCategorie(Categorie $categorie): self
     {
-        $this->Catégorie->removeElement($catGorie);
+        $this->Categorie->removeElement($categorie);
 
         return $this;
     }

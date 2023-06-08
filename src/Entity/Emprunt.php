@@ -24,7 +24,7 @@ class Emprunt
     #[ORM\Column(nullable: true)]
     private ?\DateTime $date_retour = null;
 
-    #[ORM\ManyToMany(targetEntity: Livre::class, mappedBy: 'Emprunt', orphanRemoval: false)]
+    #[ORM\ManyToMany(targetEntity: Livre::class, mappedBy: 'Emprunt', orphanRemoval: false, cascade: ['persist'])]
     private Collection $livres;
 
     #[ORM\ManyToOne(inversedBy: 'Emprunt')]
@@ -115,8 +115,5 @@ class Emprunt
         return $this;
     }
 
-    public function __toString(): string
-    {
-        // TODO: Implement __toString() method.
-    }
+
 }

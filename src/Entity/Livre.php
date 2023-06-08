@@ -30,7 +30,7 @@ class Livre
     #[ORM\ManyToMany(targetEntity: Categorie::class, inversedBy: 'livres')]
     private Collection $Categorie;
 
-    #[ORM\ManyToMany(targetEntity: Emprunt::class, inversedBy: 'livres')]
+    #[ORM\ManyToMany(targetEntity: Emprunt::class, inversedBy: 'livres', cascade: ['persist'])]
     private Collection $Emprunt;
 
     #[ORM\Column(length: 255)]

@@ -31,9 +31,8 @@ class EmpruntType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $livres = $this->livreRepository ->findAll();
+        $livres = $this->livreRepository->findBy(['statut' => 'disponible']);
         $adherents = $this->adherentRepository->findAll();
-
         $builder
             ->add('date_emprunt', DateType::class, [
                 'widget' => 'single_text',

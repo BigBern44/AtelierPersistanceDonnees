@@ -37,6 +37,9 @@
                 <th scope="col" class="px-6 py-3">
                     Disponibilité
                 </th>
+                <th scope="col" class="px-3 py-3">
+                    Nombre d'emprunt
+                </th>
 
                 <th scope="col" class="px-6 py-3">
                     Action
@@ -44,7 +47,7 @@
             </tr>
             </thead>
             <tbody>
-                {% for livre in livres %}
+                {% for livre in pagination %}
                     <tr class="bg-white border-b ">
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
                            {{ livre.titre }}
@@ -57,7 +60,9 @@
                             {{ livre.dateDeParution|date('Y-m-d') }}
                         </td>
                         <td class="px-6 py-4">
-                            {{ livre.nombreDePages }}
+                            {% for categorie in livre.categorie %}
+                                {{ categorie.nom }}
+                            {% endfor %}
                         </td>
                         <td class="px-6 py-4">
                             {% if livre.statut == "disponible" %}
@@ -69,6 +74,9 @@
                                     <div class="h-2.5 w-2.5 rounded-full bg-red-500 mr-2"></div> {{ livre.statut }}
                                 </div>
                             {% endif %}
+                        </td>
+                        <td class="px-3 py-4">
+                                {{ livre.emprunt.count }}
                         </td>
                         <td class="px-6 py-4 flex flex-row space-x-5">
                             <a href="{{ path('app_livre_edit', { 'id': livre.id }) }}" class="font-medium text-blue-600  hover:underline">Modifier</a>
@@ -83,7 +91,12 @@
 
             </tbody>
         </table>
+
     </div>
+    <div class="w-1/2 mx-auto">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+
 
 
 {% endblock %}

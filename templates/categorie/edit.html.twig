@@ -3,11 +3,18 @@
 {% block title %}Edit Categorie{% endblock %}
 
 {% block body %}
-    <h1>Edit Categorie</h1>
 
-    {{ include('categorie/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('navbar.html.twig') }}
 
-    <a href="{{ path('app_categorie_index') }}">back to list</a>
+    <div class="max-w-xl mx-auto border-2 mt-20 shadow px-10 py-10">
+        <h1 class="text-xl font-bold mb-4">Créer une catégorie</h1>
 
-    {{ include('categorie/_delete_form.html.twig') }}
+        {{ form_start(form) }}
+        {{ form_row(form.nom, { 'attr': {'class': 'flex flex-row justify-between mb-4 p-2 border border-gray-300 rounded w-full'} }) }}
+
+        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">Enregistrer</button>
+        {{ form_end(form) }}
+    </div>
+
+
 {% endblock %}

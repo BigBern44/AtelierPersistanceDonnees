@@ -102,10 +102,10 @@ class AppFixtures extends Fixture
             $emprunt->setAdherent($this->getRandomAdhrent());
             $randomTimestamp = rand($startDateEmprunt, $endDateEmprunt);
             $randomDate = date('Y-m-d', $randomTimestamp);
-            $emprunt->setDateEmprunt(new \DateTimeImmutable($randomDate));
+            $emprunt->setDateEmprunt(new \DateTime($randomDate));
             $randomTimestamp = rand($randomTimestamp, $endDateEmprunt);
             $randomDate = date('Y-m-d', $randomTimestamp);
-            $emprunt->setDateFinPrevue(new \DateTimeImmutable($randomDate));
+            $emprunt->setDateFinPrevue(new \DateTime($randomDate));
 
             $livre= $this->getRandomLivreDispo();
             $livre->setStatut("non disponible");

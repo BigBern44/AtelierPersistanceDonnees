@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Emprunt;
 use App\Form\EmpruntType;
 use App\Repository\EmpruntRepository;
+use App\Repository\LivreRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,6 +21,23 @@ class EmpruntController extends AbstractController
             'emprunts' => $empruntRepository->findAll(),
         ]);
     }
+
+    #[Route('retour/{id}', name: 'app_emprunt_retour', methods: ['GET', 'POST'])]
+    public function retour(Request $request, Emprunt $emprunt, EmpruntRepository $empruntRepository, LivreRepository $livreRepository): Response
+    {
+        $emprunt->setDateRetour(new \DateTime('now'));
+        $livres = $emprunt->getLivres();
+        foreach ($livres as $livre){
+            $livre->setStatut("disponible");
+            $livreRepository->save($livre, true);
+        }
+        $empruntRepository->save($emprunt, true);
+        return $this->render('emprunt/index.html.twig', [
+            'emprunts' => $empruntRepository->findAll(),
+        ]);
+    }
+
+
 
     #[Route('/new', name: 'app_emprunt_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EmpruntRepository $empruntRepository): Response

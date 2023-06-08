@@ -74,13 +74,12 @@ class AppFixtures extends Fixture
             $livre->setDateDeParution(new \DateTime($randomDate));
             $livre->setNombreDePages(random_int(50,350));
             $livre->setStatut("disponible");
-            $livre->setTitre($this->faker->sentence($nbWords = random_int(1,6), $variableNbWords = true));
+            $livre->setTitre($this->faker->sentence($nbWords = random_int(1,3)));
             $categorie = $this->getRandomCategorie();
             $livre->addCategorie($categorie);
             $manager->persist($categorie);
             $manager->persist($livre);
             $manager->flush();
-
         }
 
         for($i= 0; $i<100; $i++){
@@ -98,30 +97,20 @@ class AppFixtures extends Fixture
         $startDateEmprunt = strtotime('2020-01-01');
         $endDateEmprunt = strtotime('2023-12-31');
 
-        for($i= 0; $i<30; $i++){
-
+        for($i= 0; $i<20; $i++){
             $emprunt = new Emprunt();
             $emprunt->setAdherent($this->getRandomAdhrent());
-
             $randomTimestamp = rand($startDateEmprunt, $endDateEmprunt);
             $randomDate = date('Y-m-d', $randomTimestamp);
             $emprunt->setDateEmprunt(new \DateTimeImmutable($randomDate));
-
             $randomTimestamp = rand($randomTimestamp, $endDateEmprunt);
             $randomDate = date('Y-m-d', $randomTimestamp);
             $emprunt->setDateFinPrevue(new \DateTimeImmutable($randomDate));
 
-            $randomTimestamp = rand($randomTimestamp, strtotime('now'));
-            $randomDate = date('Y-m-d', $randomTimestamp);
-            $emprunt->setDateRetour(new \DateTimeImmutable($randomDate));
-            $livre = $this->getRandomLivreDispo();
-
+            $livre= $this->getRandomLivreDispo();
             $livre->setStatut("non disponible");
-
             $emprunt->addLivre($livre);
-
             $manager->persist($livre);
-
             $manager->persist($emprunt);
 
             $manager->flush();

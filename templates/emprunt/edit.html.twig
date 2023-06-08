@@ -3,11 +3,26 @@
 {% block title %}Edit Emprunt{% endblock %}
 
 {% block body %}
-    <h1>Edit Emprunt</h1>
+    {{ include('navbar.html.twig') }}
 
-    {{ include('emprunt/_form.html.twig', {'button_label': 'Update'}) }}
+    <div class="max-w-xl mx-auto border-2 mt-20 shadow px-10 py-10">
+        <h1 class="text-xl font-bold mb-4">Créer un emprunt</h1>
 
-    <a href="{{ path('app_emprunt_index') }}">back to list</a>
+        {{ form_start(form) }}
+        {{ form_row(form.date_emprunt, { 'attr': {'class': 'flex flex-row justify-between mb-4 p-2 border border-gray-300 rounded w-full'} }) }}
+        {{ form_row(form.date_fin_prevue, { 'attr': {'class': 'flex flex-row justify-between mb-4 p-2 border border-gray-300 rounded w-full'} }) }}
 
-    {{ include('emprunt/_delete_form.html.twig') }}
+        <div class="mb-4">
+            <label class="font-bold" for="{{ form.livres.vars.id }}">Livres :</label>
+            {{ form_widget(form.livres, { 'attr': {'class': 'border border-gray-300 rounded w-full'} }) }}
+        </div>
+
+        <div class="mb-4">
+            <label class="font-bold" for="{{ form.adherent.vars.id }}">Adhérent :</label>
+            {{ form_widget(form.adherent, { 'attr': {'class': 'border border-gray-300 rounded w-full'} }) }}
+        </div>
+
+        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">Enregistrer</button>
+        {{ form_end(form) }}
+    </div>
 {% endblock %}

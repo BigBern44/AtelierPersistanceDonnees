@@ -16,13 +16,13 @@ class Emprunt
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $date_emprunt = null;
+    private ?\DateTime $date_emprunt = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $date_fin_prevue = null;
+    private ?\DateTime $date_fin_prevue = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $date_retour = null;
+    #[ORM\Column(nullable: true)]
+    private ?\DateTime $date_retour = null;
 
     #[ORM\ManyToMany(targetEntity: Livre::class, mappedBy: 'Emprunt', orphanRemoval: false)]
     private Collection $livres;
@@ -40,36 +40,36 @@ class Emprunt
         return $this->id;
     }
 
-    public function getDateEmprunt(): ?\DateTimeImmutable
+    public function getDateEmprunt(): ?\DateTime
     {
         return $this->date_emprunt;
     }
 
-    public function setDateEmprunt(\DateTimeImmutable $date_emprunt): self
+    public function setDateEmprunt(\DateTime $date_emprunt): self
     {
         $this->date_emprunt = $date_emprunt;
 
         return $this;
     }
 
-    public function getDateFinPrevue(): ?\DateTimeImmutable
+    public function getDateFinPrevue(): ?\DateTime
     {
         return $this->date_fin_prevue;
     }
 
-    public function setDateFinPrevue(\DateTimeImmutable $date_fin_prevue): self
+    public function setDateFinPrevue(\DateTime $date_fin_prevue): self
     {
         $this->date_fin_prevue = $date_fin_prevue;
 
         return $this;
     }
 
-    public function getDateRetour(): ?\DateTimeImmutable
+    public function getDateRetour(): ?\DateTime
     {
         return $this->date_retour;
     }
 
-    public function setDateRetour(\DateTimeImmutable $date_retour): self
+    public function setDateRetour(\DateTime $date_retour): self
     {
         $this->date_retour = $date_retour;
 

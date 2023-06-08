@@ -37,6 +37,7 @@ class LivreType extends AbstractType
         $categories = $this->categorieRepository->findAll();
 
         $builder
+
             ->add('titre', TextType::class, [])
             ->add('date_de_parution', DateType::class, [
                 'widget' => 'single_text',

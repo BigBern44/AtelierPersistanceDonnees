@@ -32,7 +32,7 @@ class HomeController extends AbstractController
             $query = $this->entityManager->createQueryBuilder()
                 ->select('livre')
                 ->from('App\Entity\Livre', 'livre')
-                ->join('livre.Auteur', 'auteur') // Utilisation de la casse correcte
+                ->join('livre.auteur', 'auteur') // Utilisation de la casse correcte
                 ->where('auteur.nom LIKE :authorName OR auteur.prenom LIKE :authorName')
                 ->setParameter('authorName',  '%' . $searchTerm . '%')
                 ->getQuery();

@@ -51,7 +51,7 @@ class LivreType extends AbstractType
                 'label' => 'Statut',
                 'choices' => [
                     'Disponible' => 'disponible',
-                    'Indisponible' => 'indisponible',
+                    'Indisponible' => 'non disponible',
                 ],
                 'placeholder' => 'Choisir le statut',
                 'required' => true,
@@ -60,9 +60,7 @@ class LivreType extends AbstractType
                 'label' => 'Auteur',
                 'class' => Auteur::class,
                 'choices' => $auteurs,
-                'choice_label' => function ($auteur) {
-                    return $auteur->getNom() . ' ' . $auteur->getPrenom();
-                },
+                'choice_label' => "nom",
                 'placeholder' => 'Choisir un auteur', // Optional placeholder text
                 'required' => false, // Set to true if the field is required
             ])

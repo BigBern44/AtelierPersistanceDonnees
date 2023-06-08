@@ -11,8 +11,8 @@
     <div class="flex flex-row justify-between w-4/5 mt-20 mx-auto">
         <a href="{{ path('app_emprunt_new') }}" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-1 px-4 border border-blue-500 hover:border-transparent rounded flex items-center cursor-pointer">Ajouter un emprunt</a>
         {{ form_start(form) }}
-            <div class="flex flex-row space-x-5">
-                {{ form_row(form.rendu, { 'attr': {'class': 'flex flex-row  mb-4 p-2 border border-gray-300 rounded '} }) }}
+            <div class="flex flex-row space-x-5 items-center">
+                {{ form_row(form.rendu, { 'attr': {'class': 'mr-5 p-2 border border-2 rounded space-x-5 px-5'} }) }}
                 {{ form_row(form.date_emprunt, { 'attr': {'class': 'flex flex-row  mb-4 p-2 border border-gray-300 rounded '} }) }}
                 {{ form_row(form.date_fin_prevue, { 'attr': {'class': 'flex flex-row  mb-4 p-2 border border-gray-300 rounded '} }) }}
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">Rechercher</button>

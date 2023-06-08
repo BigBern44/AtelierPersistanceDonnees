@@ -36,6 +36,9 @@ class Livre
     #[ORM\Column(length: 255)]
     private ?string $statut = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image_url = null;
+
     public function __construct()
     {
         $this->Categorie = new ArrayCollection();
@@ -152,6 +155,18 @@ class Livre
     public function setStatut(string $statut): self
     {
         $this->statut = $statut;
+
+        return $this;
+    }
+
+    public function getImageUrl(): ?string
+    {
+        return $this->image_url;
+    }
+
+    public function setImageUrl(?string $image_url): self
+    {
+        $this->image_url = $image_url;
 
         return $this;
     }

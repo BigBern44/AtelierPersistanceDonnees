@@ -12,9 +12,10 @@ use App\Repository\AuteurRepository;
 use App\Repository\CategorieRepository;
 use App\Repository\LivreRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
+use GuzzleHttp\Client;
+use PhpParser\Node\Expr\Array_;
 
 class AppFixtures extends Fixture
 {
@@ -33,6 +34,13 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
+        $client = new Client();
+
+        // Make a request to the Google Books API to retrieve novels with thumbnail images
+        $response = $client->get('https://www.googleapis.com/books/v1/volumes?q=subject:fiction&printType=books&maxResults=40');
+
+        $data = json_decode($response->getBody(), true);
+
         $categories = [
             'Science-fiction',
             'Romance',
@@ -59,24 +67,26 @@ class AppFixtures extends Fixture
         $endDate = strtotime('2022-12-31');
 
         for ($i = 0; $i < 50; $i++) {
-            $auteur = new Auteur();
-            $auteur->setNom($this->faker->lastName);
-            $auteur->setPrenom($this->faker->firstName);
-            $manager->persist($auteur);
+
         }
         $manager->flush();
 
-        for($i= 0; $i<200; $i++){
+        foreach ($data['items'] as $item) {
+
             $livre = new Livre();
-            $livre->setAuteur($this->getRandomAuteur());
+            $auteur = $this->getNewAuthor($item['volumeInfo']['authors'][0] ?? $this->faker->name);
+
+            $livre->setAuteur($auteur);
             $randomTimestamp = rand($startDate, $endDate);
             $randomDate = date('Y-m-d', $randomTimestamp);
-            $livre->setDateDeParution(new \DateTime($randomDate));
-            $livre->setNombreDePages(random_int(50,350));
+            $livre->setDateDeParution(new \DateTime($item['volumeInfo']['publishedDate'] ?? $randomDate));
+            $livre->setNombreDePages($item['volumeInfo']['pageCount'] ?? random_int(54,356)); // Use null if 'pageCount' is not defined
+            $livre->setImageUrl($item['volumeInfo']['imageLinks']['thumbnail']);
             $livre->setStatut("disponible");
-            $livre->setTitre($this->faker->sentence($nbWords = random_int(1,3)));
+            $livre->setTitre($item['volumeInfo']['title']);
             $categorie = $this->getRandomCategorie();
             $livre->addCategorie($categorie);
+            $manager->persist($auteur);
             $manager->persist($categorie);
             $manager->persist($livre);
             $manager->flush();
@@ -127,11 +137,11 @@ class AppFixtures extends Fixture
         return $randCategorie = $listCategorie[$randInt];
     }
 
-    public function getRandomAuteur() : Auteur
+    public function getNewAuthor(string $auteurNom) : Auteur
     {
-        $listAuteur = $this->auteurRepository->findAll();
-        $randInt = random_int(0,sizeof($listAuteur)-1);
-        return $randAuteur = $listAuteur[$randInt];
+        $auteur = new Auteur();
+        $auteur->setNom($auteurNom);
+        return $auteur;
     }
 
     public function getRandomAdhrent() : Adherent

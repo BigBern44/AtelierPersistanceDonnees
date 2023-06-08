@@ -18,10 +18,9 @@ class Auteur
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $prenom = null;
 
-    #[ORM\OneToMany(mappedBy: 'Auteur', targetEntity: Livre::class)]
+
+    #[ORM\OneToMany(mappedBy: 'Auteur', targetEntity: Livre::class, cascade: ['persist'])]
     private Collection $livres;
 
     public function __construct()
@@ -46,17 +45,7 @@ class Auteur
         return $this;
     }
 
-    public function getPrenom(): ?string
-    {
-        return $this->prenom;
-    }
 
-    public function setPrenom(string $prenom): self
-    {
-        $this->prenom = $prenom;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Livre>

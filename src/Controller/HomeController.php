@@ -34,7 +34,7 @@ class HomeController extends AbstractController
                 ->select('livre')
                 ->from('App\Entity\Livre', 'livre')
                 ->join('livre.auteur', 'auteur') // Utilisation de la casse correcte
-                ->where('auteur.nom LIKE :authorName OR auteur.prenom LIKE :authorName')
+                ->where('auteur.nom LIKE :authorName')
                 ->setParameter('authorName',  '%' . $searchTerm . '%')
                 ->getQuery();
 

@@ -45,7 +45,7 @@ class EmpruntController extends AbstractController
             $emprunts += $query->getResult();
             if( $formData['rendu'] == true){
                 foreach ( $emprunts as $emprunt){
-                    if ($emprunt->getDateRetour() == null){
+                    if ($emprunt->getDateRetour() != null){
                         $emprunts = array_filter($emprunts, function ($value) use ($emprunt) {
                             return $value !== $emprunt;
                         });
@@ -53,12 +53,9 @@ class EmpruntController extends AbstractController
                 }
             }
 
-
-
         }else{
             $emprunts = $empruntRepository->findAll();
         }
-
 
         return $this->render('emprunt/index.html.twig', [
             'emprunts' => $emprunts,

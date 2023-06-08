@@ -14,7 +14,7 @@ class SearchCategorieType extends AbstractType
     {
         $builder
             ->add('rendu', CheckboxType::class, [
-                'label' => 'Emprunt rendu',
+                'label' => 'Emprunt en cours',
                 'required' => false,
                 'attr' => [
                     'class' => 'form-check-input',

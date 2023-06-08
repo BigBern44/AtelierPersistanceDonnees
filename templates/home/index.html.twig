@@ -60,9 +60,15 @@
                             {{ livre.dateDeParution|date('Y-m-d') }}
                         </td>
                         <td class="px-6 py-4">
+                            {% if livre.categorie is not empty %}
                             {% for categorie in livre.categorie %}
                                 {{ categorie.nom }}
                             {% endfor %}
+                            {% else %}
+                                <p>
+                                    catégorie supprimée ❌
+                                </p>
+                            {% endif %}
                         </td>
                         <td class="px-6 py-4">
                             {% if livre.statut == "disponible" %}
